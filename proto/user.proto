@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package user.v1;
+
+//https://developers.google.com/protocol-buffers/docs/reference/go-generated#package
+//The Go import path is locally specified in a .proto file by declaring a go_package option with the full import path of the Go package.
+option go_package = "github.com/jittash/go-grpc-crud";
+
+service Users {
+    rpc CreateNewUser(CreateNewUserRequest) returns (User) {}
+    rpc GetAllUsers(google.protobuf.Empty) returns (GetAllUsersResponse) {}
+    rpc GetUser(GetUserRequest) returns (User) {}
+    rpc UpdateUser(UpdateUserRequest) returns (User) {}
+    rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {}
+}
+
+message User {
+    message Name {
+        string first_name = 1;
+        string last_name = 2;
+    }
+    int32 id = 1;
+    string email = 2;
+    Name name = 3;
+    int32 phone_number = 4;
+}
+
+
+message CreateNewUserRequest {
+    User user = 1;
+}
+
+message GetAllUsersResponse {
+    repeated User users = 1;
+}
+
+message GetUserRequest {
+    int32 id = 1;
+}
+
+message UpdateUserRequest {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    int32 id = 1;
+}
